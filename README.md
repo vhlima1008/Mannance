@@ -5,7 +5,7 @@
 ![GitHub repo file or directory count](https://img.shields.io/github/directory-file-count/gannicos/mannance)
 ![GitHub repo size](https://img.shields.io/github/repo-size/gannicos/mannance)
 
-> This an app with Manager your Finances.
+> This an App to Manager your Finances.
 
 ### Adjust and Objectives:
 Along of time we're modding this app. Now, here're some features added/to add:
