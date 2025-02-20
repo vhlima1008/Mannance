@@ -11,6 +11,7 @@ const IncomeForm = () => {
   const [extraIncome, setExtraIncome] = useState('');
   const [incomes, setIncomes] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [editingIncome, setEditingIncome] = useState(null);
 
   useEffect(() => {
     // Carrega os dados salvos ao iniciar o componente
@@ -55,33 +56,52 @@ const IncomeForm = () => {
       extraIncome: parseFloat(extraIncome),
     };
 
-    setIncomes(prevIncomes => {
-      const existingIndex = prevIncomes.findIndex(income => income.month === month);
-      if (existingIndex >= 0) {
-        const updatedIncomes = [...prevIncomes];
-        updatedIncomes[existingIndex] = newIncome;
-        return updatedIncomes;
-      }
-      return [...prevIncomes, newIncome];
-    });
+    if (editingIncome) {
+      // Atualiza o registro que está sendo editado (usando o mês antigo como referência)
+      setIncomes(prevIncomes => prevIncomes.map(inc => 
+        inc.month === editingIncome.month ? newIncome : inc
+      ));
+    } else {
+      // Adiciona novo registro ou atualiza se já existir
+      setIncomes(prevIncomes => {
+        const existingIndex = prevIncomes.findIndex(inc => inc.month === month);
+        if (existingIndex >= 0) {
+          const updatedIncomes = [...prevIncomes];
+          updatedIncomes[existingIndex] = newIncome;
+          return updatedIncomes;
+        }
+        return [...prevIncomes, newIncome];
+      });
+    }
 
-    // Reset fields
+    // Reset dos campos e encerra o modo de edição
     setSalary('');
     setDividends('');
     setInvestments('');
     setExtraIncome('');
-
-    // Oculta o formulário após enviar
     setIsFormVisible(false);
+    setEditingIncome(null);
   };
 
   const handleDelete = (monthToDelete) => {
     setIncomes(prevIncomes => prevIncomes.filter(income => income.month !== monthToDelete));
   };
 
+  const handleEdit = (income) => {
+    setEditingIncome(income);
+    setMonth(income.month);
+    setSalary(income.salary.toString());
+    setDividends(income.dividends.toString());
+    setInvestments(income.investments.toString());
+    setExtraIncome(income.extraIncome.toString());
+    setIsFormVisible(true);
+  };
+
   const calculateTotalIncome = (income) => {
     return income.salary + income.dividends + income.investments + income.extraIncome;
   };
+
+  const totalIncomes = incomes.reduce((acc, income) => acc + calculateTotalIncome(income), 0);
 
   const renderIncomeItem = ({ item }) => (
     <View style={styles.incomeItem}>
@@ -91,16 +111,20 @@ const IncomeForm = () => {
       <Text>Investimentos: R${item.investments.toFixed(2)}</Text>
       <Text>Renda Extra: R${item.extraIncome.toFixed(2)}</Text>
       <Text>Total: R${calculateTotalIncome(item).toFixed(2)}</Text>
-      <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.month)}>
-        <Text style={styles.deleteButtonText}>Excluir</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.month)}>
+          <Text style={styles.deleteButtonText}>Excluir</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.editButton} onPress={() => handleEdit(item)}>
+          <Text style={styles.editButtonText}>Editar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
-  const totalIncome = incomes.reduce((acc, income) => acc + calculateTotalIncome(income), 0);
-
   return (
     <View style={styles.container}>
+      <Text style={styles.totalIncomesText}>Renda: R${totalIncomes.toFixed(2)}</Text>
       <FlatList
         data={incomes.sort((a, b) => {
           const monthsOrder = [
@@ -114,7 +138,7 @@ const IncomeForm = () => {
         keyExtractor={(item, index) => index.toString()}
         style={styles.list}
       />
-
+      
       {isFormVisible && (
         <View style={styles.formContainer}>
           <Text style={styles.title}>Registrar Renda Mensal</Text>
@@ -159,16 +183,16 @@ const IncomeForm = () => {
             value={extraIncome}
             onChangeText={setExtraIncome}
           />
+          <Button title="Salvar" onPress={handleSubmit} />
         </View>
       )}
 
-      <TouchableOpacity style={styles.button} onPress={() => setIsFormVisible(prev => !prev)}>
+      <TouchableOpacity style={styles.button} onPress={() => {
+        setIsFormVisible(prev => !prev);
+        setEditingIncome(null); // Caso o formulário seja para cadastro, limpa o modo de edição
+      }}>
         <Text style={styles.buttonText}>{isFormVisible ? "Cancelar" : "Cadastrar Renda"}</Text>
       </TouchableOpacity>
-
-      {isFormVisible && (
-        <Button title="Salvar" onPress={handleSubmit} />
-      )}
     </View>
   );
 };
@@ -178,6 +202,11 @@ const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     backgroundColor: '#f9f9f9',
+  },
+  totalIncomesText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   title: {
     fontSize: 24,
@@ -218,14 +247,29 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
   },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
   deleteButton: {
     backgroundColor: 'red',
     padding: 5,
     borderRadius: 3,
-    marginTop: 10,
     alignItems: 'center',
+    marginRight: 10,
   },
   deleteButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+  },
+  editButton: {
+    backgroundColor: 'orange',
+    padding: 5,
+    borderRadius: 3,
+    alignItems: 'center',
+  },
+  editButtonText: {
     color: '#FFFFFF',
     fontSize: 14,
   },

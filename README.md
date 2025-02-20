@@ -1,10 +1,10 @@
-# Mannance
+# Educação Financeira
 
-![GitHub language count](https://img.shields.io/github/languages/count/gannicos/mannance)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/gannicos/mannance)
-![GitHub contributors](https://img.shields.io/github/contributors/gannicos/mannance)
-![GitHub repo file or directory count](https://img.shields.io/github/directory-file-count/gannicos/mannance)
-![GitHub repo size](https://img.shields.io/github/repo-size/gannicos/mannance)
+![GitHub language count](https://img.shields.io/github/languages/count/pedro3141592/edu-financeira)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/pedro3141592/edu-financeira)
+![GitHub contributors](https://img.shields.io/github/contributors/pedro3141592/edu-financeira)
+![GitHub repo file or directory count](https://img.shields.io/github/directory-file-count/pedro3141592/edu-financeira)
+![GitHub repo size](https://img.shields.io/github/repo-size/pedro3141592/edu-financeira)
 
 > Aplicação para gestão do fluxo financeiro do usuário, afim de que este possa melhor gerir seus ganhos e gastos.
 

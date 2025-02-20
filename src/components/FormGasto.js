@@ -14,6 +14,7 @@ const FormGasto = () => {
   const [others, setOthers] = useState('');
   const [expenses, setExpenses] = useState([]);
   const [isFormVisible, setIsFormVisible] = useState(false);
+  const [editingExpense, setEditingExpense] = useState(null);
 
   useEffect(() => {
     // Carrega os dados salvos ao iniciar o componente
@@ -61,17 +62,27 @@ const FormGasto = () => {
       others: parseFloat(others),
     };
 
-    setExpenses(prevExpenses => {
-      const existingIndex = prevExpenses.findIndex(expense => expense.month === month);
-      if (existingIndex >= 0) {
-        const updatedExpenses = [...prevExpenses];
-        updatedExpenses[existingIndex] = newExpense;
-        return updatedExpenses;
-      }
-      return [...prevExpenses, newExpense];
-    });
+    if (editingExpense) {
+      // Atualiza o registro que está sendo editado
+      setExpenses(prevExpenses =>
+        prevExpenses.map(exp =>
+          exp.month === editingExpense.month ? newExpense : exp
+        )
+      );
+    } else {
+      // Adiciona novo registro ou atualiza se já existir
+      setExpenses(prevExpenses => {
+        const existingIndex = prevExpenses.findIndex(expense => expense.month === month);
+        if (existingIndex >= 0) {
+          const updatedExpenses = [...prevExpenses];
+          updatedExpenses[existingIndex] = newExpense;
+          return updatedExpenses;
+        }
+        return [...prevExpenses, newExpense];
+      });
+    }
 
-    // Reset fields
+    // Reset dos campos e encerra o modo de edição
     setRent('');
     setFood('');
     setTransport('');
@@ -79,18 +90,33 @@ const FormGasto = () => {
     setEducation('');
     setLeisure('');
     setOthers('');
-    
-    // Ocultar o formulário após o cadastro
     setIsFormVisible(false);
+    setEditingExpense(null);
   };
 
   const handleDelete = (monthToDelete) => {
     setExpenses(prevExpenses => prevExpenses.filter(expense => expense.month !== monthToDelete));
   };
 
+  const handleEdit = (expense) => {
+    setEditingExpense(expense);
+    setMonth(expense.month);
+    setRent(expense.rent.toString());
+    setFood(expense.food.toString());
+    setTransport(expense.transport.toString());
+    setHealth(expense.health.toString());
+    setEducation(expense.education.toString());
+    setLeisure(expense.leisure.toString());
+    setOthers(expense.others.toString());
+    setIsFormVisible(true);
+  };
+
   const calculateTotalExpense = (expense) => {
     return expense.rent + expense.food + expense.transport + expense.health + expense.education + expense.leisure + expense.others;
   };
+
+  // 'acc' => acumulador que soma o total de cada despesa
+  const totalExpenses = expenses.reduce((acc, expense) => acc + calculateTotalExpense(expense), 0);
 
   const renderExpenseItem = ({ item }) => (
     <View style={styles.expenseItem}>
@@ -103,14 +129,20 @@ const FormGasto = () => {
       <Text>Lazer: R${item.leisure.toFixed(2)}</Text>
       <Text>Outros: R${item.others.toFixed(2)}</Text>
       <Text>Total: R${calculateTotalExpense(item).toFixed(2)}</Text>
-      <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.month)}>
-        <Text style={styles.deleteButtonText}>Excluir</Text>
-      </TouchableOpacity>
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.month)}>
+          <Text style={styles.deleteButtonText}>Excluir</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.editButton} onPress={() => handleEdit(item)}>
+          <Text style={styles.editButtonText}>Editar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
   return (
     <View style={styles.container}>
+      <Text style={styles.totalExpensesText}>Despesas: R${totalExpenses.toFixed(2)}</Text>
       <FlatList
         data={expenses}
         renderItem={renderExpenseItem}
@@ -187,7 +219,13 @@ const FormGasto = () => {
         </View>
       )}
 
-      <TouchableOpacity style={styles.button} onPress={() => setIsFormVisible(prev => !prev)}>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => {
+          setIsFormVisible(prev => !prev);
+          setEditingExpense(null); // Limpa o modo de edição se estiver cancelando o formulário
+        }}
+      >
         <Text style={styles.buttonText}>{isFormVisible ? "Cancelar" : "Cadastrar Gastos"}</Text>
       </TouchableOpacity>
     </View>
@@ -199,6 +237,11 @@ const styles = StyleSheet.create({
     padding: 20,
     flex: 1,
     backgroundColor: '#f9f9f9',
+  },
+  totalExpensesText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
   },
   title: {
     fontSize: 24,
@@ -239,6 +282,11 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 16,
   },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
   deleteButton: {
     backgroundColor: 'red',
     padding: 5,
@@ -247,6 +295,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   deleteButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+  },
+  editButton: {
+    backgroundColor: 'orange',
+    padding: 5,
+    borderRadius: 3,
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  editButtonText: {
     color: '#FFFFFF',
     fontSize: 14,
   },
