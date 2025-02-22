@@ -120,15 +120,15 @@ const FormGasto = () => {
 
   const renderExpenseItem = ({ item }) => (
     <View style={styles.expenseItem}>
-      <Text>Mês: {item.month}</Text>
-      <Text>Aluguéis: R${item.rent.toFixed(2)}</Text>
-      <Text>Alimentação: R${item.food.toFixed(2)}</Text>
-      <Text>Transporte: R${item.transport.toFixed(2)}</Text>
-      <Text>Saúde: R${item.health.toFixed(2)}</Text>
-      <Text>Educação: R${item.education.toFixed(2)}</Text>
-      <Text>Lazer: R${item.leisure.toFixed(2)}</Text>
-      <Text>Outros: R${item.others.toFixed(2)}</Text>
-      <Text>Total: R${calculateTotalExpense(item).toFixed(2)}</Text>
+      <Text style={styles.expenseText}>Mês: {item.month}</Text>
+      <Text style={styles.expenseText}>Aluguéis: R${item.rent.toFixed(2)}</Text>
+      <Text style={styles.expenseText}>Alimentação: R${item.food.toFixed(2)}</Text>
+      <Text style={styles.expenseText}>Transporte: R${item.transport.toFixed(2)}</Text>
+      <Text style={styles.expenseText}>Saúde: R${item.health.toFixed(2)}</Text>
+      <Text style={styles.expenseText}>Educação: R${item.education.toFixed(2)}</Text>
+      <Text style={styles.expenseText}>Lazer: R${item.leisure.toFixed(2)}</Text>
+      <Text style={styles.expenseText}>Outros: R${item.others.toFixed(2)}</Text>
+      <Text style={styles.expenseText}>Total: R${calculateTotalExpense(item).toFixed(2)}</Text>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.month)}>
           <Text style={styles.deleteButtonText}>Excluir</Text>
@@ -234,14 +234,21 @@ const FormGasto = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    marginHorizontal: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
   },
   totalExpensesText: {
-    fontSize: 18,
+    borderRadius: "30px",
+    background: "#e0e0e0",
+    boxShadow: "inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   title: {
     fontSize: 24,
@@ -261,9 +268,15 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   expenseItem: {
-    padding: 10,
-    borderBottomColor: 'lightgray',
-    borderBottomWidth: 1,
+    borderRadius: "30px",
+    background: "#e0e0e0",
+    boxShadow: "inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff",
+    padding: 40,
+    marginBottom: 10,
+  },
+  expenseText: {
+    fontSize: 20,
+    marginVertical: 2.5,
   },
   list: {
     marginTop: 20,
@@ -288,25 +301,27 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   deleteButton: {
-    backgroundColor: 'red',
+    borderRadius: "5px",
+    backgroundColor: "#ffb3b3",
+    boxShadow: "5px 5px 10px #b1b1b1, -5px -5px 10px #ffffff",
     padding: 5,
-    borderRadius: 3,
-    marginTop: 10,
-    alignItems: 'center',
+    alignItems: "center",
+    marginRight: 10,
   },
   deleteButtonText: {
-    color: '#FFFFFF',
+    color: "black",
     fontSize: 14,
   },
   editButton: {
-    backgroundColor: 'orange',
+    borderRadius: "5px",
+    backgroundColor: "#b3c9ff",
+    boxShadow: "5px 5px 10px #b1b1b1, -5px -5px 10px #ffffff",
     padding: 5,
-    borderRadius: 3,
-    marginTop: 10,
-    alignItems: 'center',
+    alignItems: "center",
+    marginRight: 10,
   },
   editButtonText: {
-    color: '#FFFFFF',
+    color: "black",
     fontSize: 14,
   },
 });

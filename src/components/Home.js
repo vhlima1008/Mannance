@@ -79,9 +79,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 32,
-
     },
     balanceText: {
+        borderRadius: "30px",
+        background: "#e0e0e0",
+        boxShadow: "inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff",
+        paddingHorizontal: 20,
+        paddingVertical: 10,
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,

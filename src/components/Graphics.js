@@ -105,15 +105,10 @@ const styles = StyleSheet.create({
         position: "relative",
         padding: 20,
         backgroundColor: '#f7f7f7',
-        borderRadius: 15,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.2,
-        shadowRadius: 8,
-        elevation: 5,
+        borderRadius: 30,
+        borderRadius: "30px",
+        background: "#e0e0e0",
+        boxShadow: "inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff",
         marginHorizontal: 10, // Ajusta a margem horizontal
         marginVertical: 0, // Mantém a margem vertical
     },
