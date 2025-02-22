@@ -1,33 +1,26 @@
-# Educação Financeira
+# Mannance
+![GitHub language count](https://img.shields.io/github/languages/count/gannicos/mannance)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/t/gannicos/mannance)
+![GitHub contributors](https://img.shields.io/github/contributors/gannicos/mannance)
+![GitHub repo file or directory count](https://img.shields.io/github/directory-file-count/gannicos/mannance)
+![GitHub repo size](https://img.shields.io/github/repo-size/gannicos/mannance)
 
-![GitHub language count](https://img.shields.io/github/languages/count/pedro3141592/edu-financeira)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/t/pedro3141592/edu-financeira)
-![GitHub contributors](https://img.shields.io/github/contributors/pedro3141592/edu-financeira)
-![GitHub repo file or directory count](https://img.shields.io/github/directory-file-count/pedro3141592/edu-financeira)
-![GitHub repo size](https://img.shields.io/github/repo-size/pedro3141592/edu-financeira)
+> This is an App to Manager your Finances.
 
-> Aplicação para gestão do fluxo financeiro do usuário, afim de que este possa melhor gerir seus ganhos e gastos.
+### Adjust and Objectives:
+Along of time we're modding this app. Now, here're some features added/to add:
+- [x] Add balance in home;
+- [x] Add total income and expenses;
+- [x] An option to change the registered income/expense;
+- [ ] Create a Logo;
+- [ ] Increase the UI/UX;
+- [ ] Incomes and Expenses by month, day and year;
+- [ ] Update days automaticly;
+- [ ] Give Incomes and Expenses graphics;
+- [ ] Give an extract;
+- [ ] Incomes and Expenses organized by bank accounts;
+- [ ] Show personalized graphics for individual bank accounts.
 
-### Ajustes e Melhorias
-
-O projeto ainda está em desenvolvimento e as próximas atualizações serão voltadas para as seguintes tarefas:
-
-- [ ] Mais ferramentas de gestão financeira para o usuário;
-- [ ] Melhora do UI;
-- [ ] Mais gráficos dinâmicos em tempo real;
-- [ ] Melhor otimização;
-- [ ] Traçar erros;
-- [ ] Correção e entrega do produto.
-
-## 💻 Pré-requisitos para Edição do Projeto
-
-Antes de começar, verifique se você atendeu aos seguintes requisitos:
-
-- Você tem uma máquina `<Windows / Linux / Mac>`.
-- Você instalou a librarie `<react-native-picker>`.
-- Você instalou a librarie `<react-native-async-storage>`.
-- Você instalou a librarie `<react-native-chart-kit>`.
-- Você instalou a librarie `<react-navigation>`.
-- Você instalou a librarie `<expo/vector-icons>`.
-- Você instalou a librarie `<react-native-safe-area-context>`.
-- Você instalou a librarie `<react-native-screens>`.
+## 💻 Requeriments to run the project:
+- For editing `<Windows/Linux/Mac>`.
+- For use `<Android>`.
